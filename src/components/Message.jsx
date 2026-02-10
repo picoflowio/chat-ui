@@ -1,0 +1,20 @@
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import clsx from 'clsx';
+import './Message.css';
+
+export default function Message({ role, content }) {
+    const isUser = role === 'user';
+
+    return (
+        <div className={clsx('message-row', isUser ? 'user-row' : 'bot-row')}>
+            <div className={clsx('avatar', isUser ? 'user-avatar' : 'bot-avatar')}>
+                {isUser ? '👤' : '⚙️'}
+            </div>
+
+            <div className={clsx('message-bubble', isUser ? 'user-bubble' : 'bot-bubble')}>
+                <ReactMarkdown>{content}</ReactMarkdown>
+            </div>
+        </div>
+    );
+}
