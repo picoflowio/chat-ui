@@ -7,7 +7,7 @@ export default function Sidebar({ onNewChat, flowName, setFlowName, isOpen }) {
     return (
         <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
             <div className="sidebar-header">
-                <h2>PicoFlow.io Chat</h2>
+                <h2>picoflow.io Chat</h2>
             </div>
 
             <div className="sidebar-content">
