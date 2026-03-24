@@ -3,14 +3,17 @@ import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 import InputArea from './components/InputArea';
 import { sendMessage, endChat } from './services/api';
+import flows from './data/flows.json';
 import './App.css';
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [sessionId, setSessionId] = useState("");
-  const [flowName, setFlowName] = useState("DemoFlow");
+  const defaultFlowName = flows[0]?.name || "DemoFlow";
+  const [flowName, setFlowName] = useState(defaultFlowName);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const selectedFlow = flows.find(flow => flow.name === flowName) || flows[0];
 
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
@@ -56,6 +59,7 @@ function App() {
     <div className="app-container">
       <Sidebar
         onNewChat={handleNewChat}
+        flows={flows}
         flowName={flowName}
         setFlowName={setFlowName}
         isOpen={isSidebarOpen}
@@ -72,6 +76,7 @@ function App() {
         <ChatArea
           messages={messages}
           isLoading={inputDisabled}
+          examples={selectedFlow?.initialMessages || []}
           onSelectExample={handleSendMessage}
         />
 

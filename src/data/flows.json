@@ -1,0 +1,65 @@
+[
+  {
+    "name": "BasicFlow",
+    "initialMessages": [
+      "Hi",
+      "Show me what you can do"
+    ]
+  },
+  {
+    "name": "DemoFlow",
+    "initialMessages": [
+      "Hi",
+      "Show me how this demo works"
+    ]
+  },
+  {
+    "name": "TutorialFlow",
+    "initialMessages": [
+      "Guide me through the tutorial setup",
+      "What are the first steps to get started?"
+    ]
+  },
+  {
+    "name": "HotelFlow",
+    "initialMessages": [
+      "I want to book a hotel",
+      "What is available near City of Portland"
+    ]
+  },
+  {
+    "name": "InvoiceFlow",
+    "initialMessages": [
+      "Create an invoice for ACME Corp",
+      "Show me unpaid invoices from last month"
+    ]
+  },
+  {
+    "name": "ApptFlow",
+    "initialMessages": [
+      "Schedule a follow-up appointment for next Tuesday",
+      "What appointment times are open this week?"
+    ]
+  },
+  {
+    "name": "TravelFlow",
+    "initialMessages": [
+      "I need to book a full trip",
+      "I need to book a flight only"
+    ]
+  },
+  {
+    "name": "MedicalFlow",
+    "initialMessages": [
+      "I don't feel well",
+      "I need to book an appointment"
+    ]
+  },
+  {
+    "name": "TravelAssistantFlow",
+    "initialMessages": [
+      "I need to book a trip",
+      "Track my upcoming travel reservations"
+    ]
+  }
+]

@@ -1,13 +1,28 @@
-const RUN_MSG_URL = "/ai/run";
-const RUN_MSG_URL2 = "/ai/chat";
-const DELETE_SESSION_URL = "/ai/end";
+const apiBase = (() => {
+  const envBase = import.meta.env.VITE_API_BASE_URL?.trim();
+  if (envBase) return envBase.replace(/\/$/, "");
+
+  // When the app is loaded from file:// (packaged Electron), use localhost backend
+  if (typeof window !== "undefined" && window.location.protocol === "file:") {
+    return "http://localhost:8000";
+  }
+
+  return "";
+})();
+
+const withBase = (route) => (apiBase ? `${apiBase}${route}` : route);
+
+const RUN_MSG_URL = withBase("/ai/run");
+const RUN_MSG_URL2 = withBase("/ai/chat");
+const DELETE_SESSION_URL = withBase("/ai/end");
 
 export const sendMessage = async (message, flowName, sessionId) => {
-  const url = flowName === "TutorialFlow" ? RUN_MSG_URL2 : RUN_MSG_URL;
   const headers = {
     "Content-Type": "application/json",
     ...(sessionId && { "CHAT_SESSION_ID": sessionId }),
   };
+
+  const url = flowName === "TutorialFlow" ? RUN_MSG_URL2 : RUN_MSG_URL;
 
   try {
     const response = await fetch(url, {

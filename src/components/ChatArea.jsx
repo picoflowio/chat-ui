@@ -3,7 +3,7 @@ import Message from './Message';
 import ExampleQueries from './ExampleQueries';
 import './ChatArea.css';
 
-export default function ChatArea({ messages, isLoading, onSelectExample }) {
+export default function ChatArea({ messages, isLoading, onSelectExample, examples = [] }) {
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -17,7 +17,7 @@ export default function ChatArea({ messages, isLoading, onSelectExample }) {
     return (
         <div className="chat-area">
             {messages.length === 0 ? (
-                <ExampleQueries onSelect={onSelectExample} />
+                <ExampleQueries onSelect={onSelectExample} examples={examples} />
             ) : (
                 <div className="messages-container">
                     {messages.map((msg, index) => (

@@ -2,6 +2,11 @@
 /dist
 /node_modules
 /build
+/release
+*.dmg
+*.zip
+*.app
+*.asar
 
 # Logs
 logs
