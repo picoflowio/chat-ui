@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 import InputArea from './components/InputArea';
@@ -16,6 +16,7 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth > 768 : true
   );
+  const busyCountRef = useRef(0);
   const selectedFlow = flows.find(flow => flow.name === flowName);
 
   // Close the sidebar on small screens when resizing down
@@ -67,6 +68,19 @@ function App() {
     const userMsg = { role: 'user', content: text };
     setMessages(prev => [...prev, userMsg]);
     setInputDisabled(true);
+    const setBusy = (active) => {
+      if (typeof document === "undefined") return;
+      if (active) {
+        busyCountRef.current += 1;
+        document.body.style.cursor = "wait";
+      } else {
+        busyCountRef.current = Math.max(0, busyCountRef.current - 1);
+        if (busyCountRef.current === 0) {
+          document.body.style.cursor = "";
+        }
+      }
+    };
+    setBusy(true);
 
     try {
       const response = await sendMessage(text, flowName, sessionId);
@@ -84,8 +98,18 @@ function App() {
       setMessages(prev => [...prev, { role: 'bot', content: errText }]);
     } finally {
       setInputDisabled(false);
+      setBusy(false);
     }
   };
+
+  // Reset cursor if component unmounts while busy
+  useEffect(() => {
+    return () => {
+      if (typeof document !== "undefined") {
+        document.body.style.cursor = "";
+      }
+    };
+  }, []);
 
   const handleNewChat = async () => {
     // End current session
