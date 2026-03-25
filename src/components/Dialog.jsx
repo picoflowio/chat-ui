@@ -1,13 +1,21 @@
 /* eslint-disable react/prop-types */
 import "./Dialog.css";
 
-export default function Dialog({ open, title, message, onClose }) {
+export default function Dialog({
+  open,
+  title,
+  message,
+  onClose,
+  children,
+  actions,
+  className = "",
+}) {
   if (!open) return null;
 
   return (
     <div className="dialog-backdrop" role="presentation">
       <div
-        className="dialog"
+        className={`dialog ${className}`.trim()}
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="dialog-title"
@@ -23,11 +31,14 @@ export default function Dialog({ open, title, message, onClose }) {
         </div>
         <div className="dialog-body" id="dialog-message">
           {message}
+          {children}
         </div>
         <div className="dialog-footer">
-          <button className="dialog-action" onClick={onClose}>
-            Okay
-          </button>
+          {actions || (
+            <button className="dialog-action" onClick={onClose}>
+              Okay
+            </button>
+          )}
         </div>
       </div>
     </div>

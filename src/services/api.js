@@ -1,4 +1,9 @@
-const apiBase = (() => {
+const getApiBase = () => {
+  if (typeof window !== "undefined") {
+    const localBase = localStorage.getItem("picochat_base_url")?.trim();
+    if (localBase) return localBase.replace(/\/$/, "");
+  }
+
   const envBase = import.meta.env.VITE_API_BASE_URL?.trim();
   if (envBase) return envBase.replace(/\/$/, "");
 
@@ -8,14 +13,12 @@ const apiBase = (() => {
   }
 
   return "";
-})();
+};
 
-const withBase = (route) => (apiBase ? `${apiBase}${route}` : route);
-
-const RUN_MSG_URL = withBase("/ai/run");
-const RUN_MSG_URL2 = withBase("/ai/chat");
-const DELETE_SESSION_URL = withBase("/ai/end");
-const FLOWS_URL = withBase("/ai/flows");
+const withBase = (route) => {
+  const base = getApiBase();
+  return base ? `${base}${route}` : route;
+};
 
 export const sendMessage = async (message, flowName, sessionId) => {
   const headers = {
@@ -23,7 +26,7 @@ export const sendMessage = async (message, flowName, sessionId) => {
     ...(sessionId && { "CHAT_SESSION_ID": sessionId }),
   };
 
-  const url = flowName === "TutorialFlow" ? RUN_MSG_URL2 : RUN_MSG_URL;
+  const url = flowName === "TutorialFlow" ? withBase("/ai/chat") : withBase("/ai/run");
 
   try {
     const response = await fetch(url, {
@@ -54,7 +57,7 @@ export const endChat = async (sessionId) => {
   if (!sessionId) return;
   
   try {
-    await fetch(DELETE_SESSION_URL, {
+    await fetch(withBase("/ai/end"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +72,7 @@ export const endChat = async (sessionId) => {
 
 export const getFlows = async () => {
   try {
-    const response = await fetch(FLOWS_URL, { method: "GET" });
+    const response = await fetch(withBase("/ai/flows"), { method: "GET" });
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {

@@ -17,6 +17,8 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth > 768 : true
   );
+  const [isUrlDialogOpen, setIsUrlDialogOpen] = useState(false);
+  const [tempUrl, setTempUrl] = useState("");
   const busyCountRef = useRef(0);
   const selectedFlow = flows.find(flow => flow.name === flowName);
 
@@ -126,6 +128,10 @@ function App() {
         flowName={flowName}
         setFlowName={setFlowName}
         isOpen={isSidebarOpen}
+        onSetBaseUrl={() => {
+          setTempUrl(localStorage.getItem("picochat_base_url") || import.meta.env.VITE_API_BASE_URL || "");
+          setIsUrlDialogOpen(true);
+        }}
       />
 
       <main className="main-content">
@@ -154,6 +160,35 @@ function App() {
         message={flowsError}
         onClose={() => setFlowsError("")}
       />
+
+      <Dialog
+        open={isUrlDialogOpen}
+        title="Set Base URL"
+        onClose={() => setIsUrlDialogOpen(false)}
+        className="base-url-dialog"
+        actions={
+          <>
+            <button className="dialog-action is-ghost" onClick={() => setIsUrlDialogOpen(false)}>
+              Cancel
+            </button>
+            <button className="dialog-action" onClick={() => {
+              localStorage.setItem("picochat_base_url", tempUrl);
+              setIsUrlDialogOpen(false);
+            }}>
+              Save
+            </button>
+          </>
+        }
+      >
+        <input
+          id="base-url-field"
+          className="base-url-field"
+          type="text"
+          value={tempUrl}
+          onChange={(e) => setTempUrl(e.target.value)}
+          aria-label="Base URL"
+        />
+      </Dialog>
     </div>
   );
 }

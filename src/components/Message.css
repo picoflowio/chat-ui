@@ -30,7 +30,8 @@
 }
 
 .user-avatar {
-    background: linear-gradient(135deg, #9e7823, #87651c);
+    background: #4a4a4f;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: var(--accent-text);
 }
 

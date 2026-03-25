@@ -11,6 +11,7 @@ export default function Sidebar({
   isOpen,
   flowsLoading = false,
   flows = [],
+  onSetBaseUrl,
 }) {
   const flowOptions = flows.length ? flows.map((flow) => flow.name) : [];
 
@@ -55,6 +56,14 @@ export default function Sidebar({
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="divider"></div>
+
+        <div className="section">
+          <button className="new-chat-btn" onClick={onSetBaseUrl}>
+            ⚙️ Set Base URL
+          </button>
         </div>
 
         <div className="sidebar-footer">

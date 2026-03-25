@@ -82,3 +82,181 @@
 .dialog-action:hover {
   background: linear-gradient(135deg, #c5a032, #a98129);
 }
+
+/* Base URL dialog refresh */
+.dialog.base-url-dialog {
+  width: min(520px, 92vw);
+  padding: 1.3rem 1.25rem 1rem;
+  background:
+    radial-gradient(140% 120% at 12% 15%, rgba(255, 193, 94, 0.14), transparent 40%),
+    radial-gradient(90% 80% at 90% 20%, rgba(61, 92, 184, 0.18), transparent 48%),
+    linear-gradient(165deg, rgba(20, 14, 9, 0.95), rgba(10, 9, 12, 0.92));
+  border: 1px solid rgba(255, 221, 138, 0.25);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.base-url-dialog .dialog-body {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.dialog.base-url-dialog::before,
+.dialog.base-url-dialog::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dialog.base-url-dialog::before {
+  background: radial-gradient(circle at 30% 110%, rgba(255, 204, 112, 0.08), transparent 40%);
+  mix-blend-mode: screen;
+}
+
+.dialog.base-url-dialog::after {
+  background: linear-gradient(120deg, rgba(255, 221, 138, 0.08), transparent 45%);
+}
+
+.base-url-dialog .dialog-header {
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.base-url-dialog .dialog-title {
+  font-size: 1.2rem;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.base-url-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 221, 138, 0.12);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 221, 138, 0.25);
+  font-size: 0.8rem;
+}
+
+.base-url-body {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1rem;
+  background: rgba(20, 16, 11, 0.62);
+  border: 1px solid rgba(195, 173, 122, 0.18);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.base-url-body.single-field {
+  display: block;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.base-url-copy {
+  color: var(--text-secondary);
+  display: grid;
+  gap: 0.4rem;
+}
+
+.base-url-copy strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.base-url-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #ffd88a;
+  font-weight: 600;
+}
+
+.base-url-input {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.base-url-input label {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  letter-spacing: 0.3px;
+}
+
+.base-url-field {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid rgba(195, 173, 122, 0.35);
+  background: rgba(14, 10, 7, 0.85);
+  color: var(--text-primary);
+  outline: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.base-url-field:focus {
+  border-color: rgba(255, 221, 138, 0.8);
+  box-shadow: 0 0 0 3px rgba(255, 221, 138, 0.15), 0 16px 32px rgba(0, 0, 0, 0.4);
+  background: rgba(18, 13, 9, 0.95);
+}
+
+.base-url-helper {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.base-url-dialog .dialog-footer {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.dialog-action.is-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(195, 173, 122, 0.35);
+  box-shadow: none;
+}
+
+.dialog-action.is-ghost:hover {
+  border-color: rgba(255, 221, 138, 0.8);
+  background: rgba(20, 16, 11, 0.85);
+}
+
+@media (max-width: 640px) {
+  .dialog.base-url-dialog {
+    width: min(500px, 96vw);
+  }
+
+  .base-url-body {
+    grid-template-columns: 1fr;
+  }
+
+  .base-url-dialog .dialog-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .dialog-action {
+    text-align: center;
+  }
+}
