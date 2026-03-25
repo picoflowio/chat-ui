@@ -31,12 +31,13 @@ export const sendMessage = async (message, flowName, sessionId) => {
       body: JSON.stringify({ message, flowName }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
     const newSessionId = response.headers.get("CHAT_SESSION_ID") || sessionId;
+
+    if (!response.ok) {
+      const errMsg = data?.message || `HTTP error! status: ${response.status}`;
+      throw new Error(errMsg);
+    }
 
     return {
       message: data.message || "No response received",

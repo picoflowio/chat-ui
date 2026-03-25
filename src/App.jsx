@@ -50,11 +50,8 @@ function App() {
       const botMsg = { role: 'bot', content: response.message };
       setMessages(prev => [...prev, botMsg]);
     } catch (error) {
-      // Add error message
-      setMessages(prev => [...prev, {
-        role: 'bot',
-        content: "Sorry, something went wrong. Please try again."
-      }]);
+      const errText = error?.message || "Sorry, something went wrong. Please try again.";
+      setMessages(prev => [...prev, { role: 'bot', content: errText }]);
     } finally {
       setInputDisabled(false);
     }
