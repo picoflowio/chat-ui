@@ -6,6 +6,9 @@
     padding: 2.5rem 2rem 0;
     /* padding-bottom is 0 because input area is sticky or outside */
     background: transparent;
+    min-height: 0; /* prevent parent flex from forcing overflow upwards */
+    overflow-x: hidden;
+    padding-bottom: 6rem; /* give space so first message doesn't push input out of view */
 }
 
 .messages-container {

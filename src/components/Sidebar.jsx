@@ -47,7 +47,6 @@ export default function Sidebar({
         <div className="sidebar-footer">
           Copyright © picoflow.io 2026
         </div>
-        <div className="sidebar-footer-spacer" />
       </div>
     </aside>
   );

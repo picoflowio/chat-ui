@@ -5,6 +5,7 @@
   color: var(--text-primary);
   overflow: hidden;
   position: relative;
+  min-height: 0;
   background: radial-gradient(circle at 20% 20%, rgba(246, 195, 67, 0.16), transparent 35%),
     radial-gradient(circle at 80% 0%, rgba(152, 105, 45, 0.2), transparent 30%),
     radial-gradient(circle at 50% 70%, rgba(72, 56, 32, 0.3), transparent 45%),
@@ -26,6 +27,8 @@
   height: 100%;
   position: relative;
   backdrop-filter: blur(8px);
+  min-height: 0; /* allow inner panes to scroll instead of pushing layout */
+  overflow: hidden;
 }
 
 .input-container-wrapper {
