@@ -2,6 +2,8 @@
 import "./Sidebar.css";
 import iconPng from "/icon.png";
 import trashPng from "/trash.png";
+import urlPng from "/url.png";
+import flowPng from "/flow.png";
 
 export default function Sidebar({
   onNewChat,
@@ -38,7 +40,14 @@ export default function Sidebar({
             onClick={onFetchFlows}
             disabled={flowsLoading}
           >
-            {flowsLoading ? "⏳ Loading..." : "🔄 Get Flows"}
+            {flowsLoading ? (
+              "⏳ Loading..."
+            ) : (
+              <>
+                <img src={flowPng} alt="Get Flows" />
+                <span>Get Flows</span>
+              </>
+            )}
           </button>
         </div>
 
@@ -62,13 +71,12 @@ export default function Sidebar({
 
         <div className="section">
           <button className="new-chat-btn" onClick={onSetBaseUrl}>
-            ⚙️ Set Base URL
+            <img src={urlPng} alt="Set Base URL" />
+            <span>Set Base URL</span>
           </button>
         </div>
 
-        <div className="sidebar-footer">
-          Copyright © picoflow.io 2026
-        </div>
+        <div className="sidebar-footer">Copyright © picoflow.io 2026</div>
       </div>
     </aside>
   );

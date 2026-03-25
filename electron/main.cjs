@@ -1,4 +1,4 @@
-const { app, BrowserWindow, nativeImage } = require('electron')
+const { app, BrowserWindow, nativeImage, session } = require('electron')
 const path = require('path')
 
 const isDev =
@@ -34,6 +34,22 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
+  // Electron renders from file:// which gives the request an Origin: null header.
+  // Some backends (including the PicoFlow API) don't allow that origin, so
+  // network calls would fail only in the packaged app. We relax CORS headers
+  // in the Electron session so the renderer can talk to the backend just like
+  // the web build.
+  const defaultSession = session.defaultSession
+  defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    const responseHeaders = {
+      ...details.responseHeaders,
+      'Access-Control-Allow-Origin': ['*'],
+      'Access-Control-Allow-Headers': ['*'],
+      'Access-Control-Allow-Methods': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+    }
+    callback({ responseHeaders })
+  })
+
   createWindow()
 
   app.on('activate', () => {
