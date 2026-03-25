@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 import InputArea from './components/InputArea';
@@ -12,8 +12,23 @@ function App() {
   const [sessionId, setSessionId] = useState("");
   const defaultFlowName = flows[0]?.name || "DemoFlow";
   const [flowName, setFlowName] = useState(defaultFlowName);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth > 768 : true
+  );
   const selectedFlow = flows.find(flow => flow.name === flowName) || flows[0];
+
+  // Close the sidebar on small screens when resizing down
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;

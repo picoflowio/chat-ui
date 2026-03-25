@@ -10,8 +10,9 @@
 }
 
 .example-queries h3 {
-    margin-bottom: 2rem;
-    font-weight: 500;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .examples-grid {
@@ -23,17 +24,18 @@
 }
 
 .example-btn {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: rgba(13, 21, 43, 0.7);
+    border: 1px solid rgba(159, 180, 255, 0.2);
     color: var(--text-primary);
     padding: 1rem 1.5rem;
     border-radius: 12px;
     font-size: 1rem;
     transition: all 0.2s ease;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
 }
 
 .example-btn:hover {
     border-color: var(--accent-color);
-    background-color: var(--bg-tertiary);
-    transform: translateY(-2px);
+    background: rgba(40, 59, 255, 0.1);
+    transform: translateY(-3px);
 }

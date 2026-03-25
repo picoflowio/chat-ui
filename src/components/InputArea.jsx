@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import "./InputArea.css";
 
 export default function InputArea({ onSend, disabled }) {
-  // eslint-disable-next-line no-undef
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {

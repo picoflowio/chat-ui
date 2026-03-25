@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import "./Sidebar.css";
+import iconPng from "/icon.png";
 
 export default function Sidebar({
   onNewChat,
@@ -15,7 +16,8 @@ export default function Sidebar({
   return (
     <aside className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="sidebar-header">
-        <h2>picoflow.io Chat</h2>
+        <img src={iconPng} alt="PicoChat icon" className="title-icon" />
+        <h2>PicoChat</h2>
       </div>
 
       <div className="sidebar-content">
@@ -41,6 +43,11 @@ export default function Sidebar({
             ))}
           </select>
         </div>
+
+        <div className="sidebar-footer">
+          Copyright © picoflow.io 2026
+        </div>
+        <div className="sidebar-footer-spacer" />
       </div>
     </aside>
   );
