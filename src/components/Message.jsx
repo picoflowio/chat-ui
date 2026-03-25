@@ -9,7 +9,7 @@ export default function Message({ role, content }) {
   return (
     <div className={clsx("message-row", isUser ? "user-row" : "bot-row")}>
       <div className={clsx("avatar", isUser ? "user-avatar" : "bot-avatar")}>
-        {isUser ? "👤" : <img src="/picoclaw.png" alt="Bot" className="bot-icon" />}
+        {isUser ? "🙍" : "🦞"}
       </div>
 
       <div

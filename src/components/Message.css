@@ -35,15 +35,8 @@
 }
 
 .bot-avatar {
-    background-color: var(--bg-secondary);
+    background-color: #0b0b0f;
     border: 1px solid var(--border-color);
-}
-
-.bot-icon {
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 
 .message-bubble {
