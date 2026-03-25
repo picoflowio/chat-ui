@@ -10,7 +10,6 @@ export default function Sidebar({
   setFlowName,
   isOpen,
   flowsLoading = false,
-  flowsError = "",
   flows = [],
 }) {
   const flowOptions = flows.length ? flows.map((flow) => flow.name) : [];
@@ -56,11 +55,6 @@ export default function Sidebar({
               </option>
             ))}
           </select>
-          {flowsError && (
-            <div className="flow-error" role="alert">
-              {flowsError}
-            </div>
-          )}
         </div>
 
         <div className="sidebar-footer">

@@ -1,0 +1,84 @@
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(246, 195, 67, 0.12), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(72, 56, 32, 0.3), transparent 45%),
+    rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.dialog {
+  width: min(420px, 90vw);
+  background: linear-gradient(160deg, rgba(26, 19, 12, 0.9), rgba(15, 11, 7, 0.92));
+  border: 1px solid rgba(195, 173, 122, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  color: var(--text-primary);
+  padding: 1.1rem 1rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.dialog-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+}
+
+.dialog-close {
+  border: 1px solid rgba(195, 173, 122, 0.25);
+  background: rgba(20, 16, 11, 0.8);
+  color: var(--text-primary);
+  width: 32px;
+  height: 32px;
+  line-height: 1;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+}
+
+.dialog-close:hover {
+  border-color: var(--accent-color);
+  background: rgba(20, 16, 11, 0.95);
+}
+
+.dialog-body {
+  background: rgba(20, 16, 11, 0.55);
+  border: 1px solid rgba(195, 173, 122, 0.18);
+  padding: 0.85rem 0.9rem;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dialog-action {
+  background: linear-gradient(135deg, #9e7823, #87651c);
+  color: var(--accent-text);
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(140, 105, 28, 0.35);
+}
+
+.dialog-action:hover {
+  background: linear-gradient(135deg, #c5a032, #a98129);
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 import InputArea from './components/InputArea';
+import Dialog from './components/Dialog';
 import { sendMessage, endChat, getFlows } from './services/api';
 import './App.css';
 
@@ -30,12 +31,6 @@ function App() {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Fetch flows on first load so list is ready without manual click
-  useEffect(() => {
-    handleFetchFlows();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFetchFlows = async () => {
@@ -128,7 +123,6 @@ function App() {
         flows={flows}
         onFetchFlows={handleFetchFlows}
         flowsLoading={flowsLoading}
-        flowsError={flowsError}
         flowName={flowName}
         setFlowName={setFlowName}
         isOpen={isSidebarOpen}
@@ -153,6 +147,13 @@ function App() {
           <InputArea onSend={handleSendMessage} disabled={inputDisabled} />
         </div>
       </main>
+
+      <Dialog
+        open={Boolean(flowsError)}
+        title="Flow fetch failed"
+        message={flowsError}
+        onClose={() => setFlowsError("")}
+      />
     </div>
   );
 }
