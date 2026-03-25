@@ -129,7 +129,13 @@ function App() {
         setFlowName={setFlowName}
         isOpen={isSidebarOpen}
         onSetBaseUrl={() => {
-          setTempUrl(localStorage.getItem("picochat_base_url") || import.meta.env.VITE_API_BASE_URL || "");
+          const stored = localStorage.getItem("picochat_base_url") || "";
+          const envBase = import.meta.env.VITE_API_BASE_URL || "";
+          const fileDefault =
+            typeof window !== "undefined" && window.location.protocol === "file:"
+              ? "http://localhost:8000"
+              : "";
+          setTempUrl(stored || envBase || fileDefault);
           setIsUrlDialogOpen(true);
         }}
       />

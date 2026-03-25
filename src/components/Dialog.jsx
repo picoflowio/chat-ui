@@ -25,7 +25,11 @@ export default function Dialog({
           <div className="dialog-title" id="dialog-title">
             {title || "Notice"}
           </div>
-          <button className="dialog-close" onClick={onClose} aria-label="Close dialog">
+          <button
+            className="dialog-close"
+            onClick={onClose}
+            aria-label="Close dialog"
+          >
             ×
           </button>
         </div>
@@ -36,7 +40,7 @@ export default function Dialog({
         <div className="dialog-footer">
           {actions || (
             <button className="dialog-action" onClick={onClose}>
-              Okay
+              Close
             </button>
           )}
         </div>
