@@ -56,6 +56,14 @@
     box-shadow: 0 12px 30px rgba(140, 105, 28, 0.35);
 }
 
+.new-chat-btn img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: block;
+}
+
 .new-chat-btn:hover {
     background: linear-gradient(135deg, #c5a032, #a98129);
 }
@@ -114,4 +122,11 @@
     .sidebar.open {
         transform: translateX(0);
     }
+}
+.new-chat-btn img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: block;
 }

@@ -23,7 +23,8 @@ export default function Sidebar({
       <div className="sidebar-content">
         <div className="section">
           <button className="new-chat-btn" onClick={onNewChat}>
-            🗑️ New Chat
+            <img src="/trash.png" alt="New chat" className="new-chat-icon" />
+            New Chat
           </button>
         </div>
 
