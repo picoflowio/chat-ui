@@ -15,6 +15,7 @@ const withBase = (route) => (apiBase ? `${apiBase}${route}` : route);
 const RUN_MSG_URL = withBase("/ai/run");
 const RUN_MSG_URL2 = withBase("/ai/chat");
 const DELETE_SESSION_URL = withBase("/ai/end");
+const FLOWS_URL = withBase("/ai/flows");
 
 export const sendMessage = async (message, flowName, sessionId) => {
   const headers = {
@@ -63,5 +64,36 @@ export const endChat = async (sessionId) => {
     });
   } catch (error) {
     console.error("Error ending chat:", error);
+  }
+};
+
+export const getFlows = async () => {
+  try {
+    const response = await fetch(FLOWS_URL, { method: "GET" });
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const errMsg = data?.message || `HTTP error! status: ${response.status}`;
+      throw new Error(errMsg);
+    }
+
+    // Accept multiple possible shapes from the backend
+    const rawFlows =
+      (Array.isArray(data) && data) ||
+      (Array.isArray(data?.flows) && data.flows) ||
+      (Array.isArray(data?.data?.flows) && data.data.flows) ||
+      [];
+
+    // Normalize to objects with a name field so the UI can render consistently
+    const flows = rawFlows
+      .map((flow) =>
+        typeof flow === "string" ? { name: flow } : flow
+      )
+      .filter((flow) => flow && flow.name);
+
+    return flows;
+  } catch (error) {
+    console.error("Error fetching flows:", error);
+    throw error;
   }
 };

@@ -10,7 +10,11 @@ export default defineConfig(({ command }) => ({
       '/ai': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-      }
+      },
+      '/flows': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
     }
   }
 }))

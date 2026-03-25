@@ -68,6 +68,11 @@
     background: linear-gradient(135deg, #c5a032, #a98129);
 }
 
+.fetch-flows-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
 .divider {
     height: 1px;
     background-color: var(--border-color);
@@ -100,6 +105,12 @@
 .flow-select:focus {
     outline: none;
     border-color: var(--accent-color);
+}
+
+.flow-error {
+    margin-top: 0.4rem;
+    color: #f5c2c7;
+    font-size: 0.85rem;
 }
 
 .sidebar-footer {

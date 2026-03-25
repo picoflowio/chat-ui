@@ -1,17 +1,19 @@
 /* eslint-disable react/prop-types */
 import "./Sidebar.css";
 import iconPng from "/icon.png";
+import trashPng from "/trash.png";
 
 export default function Sidebar({
   onNewChat,
+  onFetchFlows,
   flowName,
   setFlowName,
   isOpen,
+  flowsLoading = false,
+  flowsError = "",
   flows = [],
 }) {
-  const flowOptions = flows.length
-    ? flows.map((flow) => flow.name)
-    : ["DemoFlow"];
+  const flowOptions = flows.length ? flows.map((flow) => flow.name) : [];
 
   return (
     <aside className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -23,7 +25,7 @@ export default function Sidebar({
       <div className="sidebar-content">
         <div className="section">
           <button className="new-chat-btn" onClick={onNewChat}>
-            <img src="/trash.png" alt="New chat" className="new-chat-icon" />
+            <img src={trashPng} alt="New chat" className="new-chat-icon" />
             New Chat
           </button>
         </div>
@@ -31,11 +33,22 @@ export default function Sidebar({
         <div className="divider"></div>
 
         <div className="section">
+          <button
+            className="new-chat-btn fetch-flows-btn"
+            onClick={onFetchFlows}
+            disabled={flowsLoading}
+          >
+            {flowsLoading ? "⏳ Loading..." : "🔄 Get Flows"}
+          </button>
+        </div>
+
+        <div className="section">
           <label>Select Flow:</label>
           <select
             value={flowName}
             onChange={(e) => setFlowName(e.target.value)}
             className="flow-select"
+            disabled={!flowOptions.length || flowsLoading}
           >
             {flowOptions.map((option) => (
               <option key={option} value={option}>
@@ -43,6 +56,11 @@ export default function Sidebar({
               </option>
             ))}
           </select>
+          {flowsError && (
+            <div className="flow-error" role="alert">
+              {flowsError}
+            </div>
+          )}
         </div>
 
         <div className="sidebar-footer">
