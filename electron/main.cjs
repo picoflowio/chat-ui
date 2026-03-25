@@ -49,6 +49,15 @@ app.whenReady().then(() => {
     }
     callback({ responseHeaders })
   })
+  // Also replace the file:// Origin with the target host so servers that reject
+  // Origin: null will accept requests in production builds.
+  defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    if (details.url.startsWith('http://') || details.url.startsWith('https://')) {
+      const target = new URL(details.url)
+      details.requestHeaders.Origin = `${target.protocol}//${target.host}`
+    }
+    callback({ requestHeaders: details.requestHeaders })
+  })
 
   createWindow()
 
