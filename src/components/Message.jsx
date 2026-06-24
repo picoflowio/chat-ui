@@ -1,8 +1,19 @@
+/* eslint-disable react/prop-types */
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import clsx from "clsx";
 import "./Message.css";
 
-// eslint-disable-next-line react/prop-types
+const markdownComponents = {
+  table(props) {
+    return (
+      <div className="markdown-table-wrap">
+        <table {...props} />
+      </div>
+    );
+  },
+};
+
 export default function Message({ role, content }) {
   const isUser = role === "user";
 
@@ -18,7 +29,12 @@ export default function Message({ role, content }) {
           isUser ? "user-bubble" : "bot-bubble",
         )}
       >
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={markdownComponents}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
     </div>
   );
