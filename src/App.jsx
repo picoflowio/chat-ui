@@ -118,10 +118,15 @@ function App() {
     // flowName stays the same
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+  };
+
   return (
     <div className="app-container">
       <Sidebar
         onNewChat={handleNewChat}
+        onClearChat={handleClearChat}
         flows={flows}
         onFetchFlows={handleFetchFlows}
         flowsLoading={flowsLoading}

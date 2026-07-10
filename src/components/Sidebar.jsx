@@ -2,11 +2,13 @@
 import "./Sidebar.css";
 import iconPng from "/icon.png";
 import trashPng from "/trash.png";
+import clearChatIcon from "/clear-chat.svg";
 import urlPng from "/url.png";
 import flowPng from "/flow.png";
 
 export default function Sidebar({
   onNewChat,
+  onClearChat,
   onFetchFlows,
   flowName,
   setFlowName,
@@ -25,10 +27,14 @@ export default function Sidebar({
       </div>
 
       <div className="sidebar-content">
-        <div className="section">
+        <div className="section chat-actions">
           <button className="new-chat-btn" onClick={onNewChat}>
             <img src={trashPng} alt="New chat" className="new-chat-icon" />
             New Chat
+          </button>
+          <button className="new-chat-btn" onClick={onClearChat}>
+            <img src={clearChatIcon} alt="Clear chat" className="new-chat-icon" />
+            Clear Chat
           </button>
         </div>
 

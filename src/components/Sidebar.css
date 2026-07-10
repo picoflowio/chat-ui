@@ -68,6 +68,12 @@
     background: linear-gradient(135deg, #c5a032, #a98129);
 }
 
+.chat-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
 .fetch-flows-btn:disabled {
     opacity: 0.65;
     cursor: not-allowed;
