@@ -20,23 +20,34 @@ const withBase = (route) => {
   return base ? `${base}${route}` : route;
 };
 
-export const sendMessage = async (message, flowName, sessionId) => {
+export const sendMessage = async (message, flowName, sessionId, graphName) => {
   const headers = {
     "Content-Type": "application/json",
-    ...(sessionId && { "CHAT_SESSION_ID": sessionId }),
+    // PicoFlow uses CHAT_SESSION_ID; the LangGraph demo uses SESSION_ID.
+    ...(sessionId && {
+      "CHAT_SESSION_ID": sessionId,
+      "SESSION_ID": sessionId,
+    }),
   };
 
-  const url = flowName === "TutorialFlow" ? withBase("/ai/chat") : withBase("/ai/run");
+  const url = !graphName && flowName === "TutorialFlow"
+    ? withBase("/ai/chat")
+    : withBase("/ai/run");
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers,
-      body: JSON.stringify({ message, flowName }),
+      body: JSON.stringify(
+        graphName ? { message, graphName } : { message, flowName }
+      ),
     });
 
     const data = await response.json().catch(() => ({}));
-    const newSessionId = response.headers.get("CHAT_SESSION_ID") || sessionId;
+    const newSessionId =
+      response.headers.get("SESSION_ID") ||
+      response.headers.get("CHAT_SESSION_ID") ||
+      sessionId;
 
     if (!response.ok) {
       const errMsg = data?.message || `HTTP error! status: ${response.status}`;
@@ -62,6 +73,7 @@ export const endChat = async (sessionId) => {
       headers: {
         "Content-Type": "application/json",
         "CHAT_SESSION_ID": sessionId,
+        "SESSION_ID": sessionId,
       },
       body: JSON.stringify({}),
     });
@@ -97,6 +109,31 @@ export const getFlows = async () => {
     return flows;
   } catch (error) {
     console.error("Error fetching flows:", error);
+    throw error;
+  }
+};
+
+export const getGraphs = async () => {
+  try {
+    const response = await fetch(withBase("/ai/graphs"), { method: "GET" });
+    const data = await response.json().catch(() => ([]));
+
+    if (!response.ok) {
+      const errMsg = data?.message || `HTTP error! status: ${response.status}`;
+      throw new Error(errMsg);
+    }
+
+    // The LangGraph controller returns an array of graph-name strings.
+    const rawGraphs =
+      (Array.isArray(data) && data) ||
+      (Array.isArray(data?.graphs) && data.graphs) ||
+      [];
+
+    return rawGraphs
+      .map((graph) => (typeof graph === "string" ? { name: graph } : graph))
+      .filter((graph) => graph && graph.name);
+  } catch (error) {
+    console.error("Error fetching graphs:", error);
     throw error;
   }
 };

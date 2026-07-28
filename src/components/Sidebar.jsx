@@ -12,12 +12,18 @@ export default function Sidebar({
   onFetchFlows,
   flowName,
   setFlowName,
+  onFetchGraphs,
+  graphName,
+  setGraphName,
   isOpen,
   flowsLoading = false,
   flows = [],
+  graphsLoading = false,
+  graphs = [],
   onSetBaseUrl,
 }) {
   const flowOptions = flows.length ? flows.map((flow) => flow.name) : [];
+  const graphOptions = graphs.length ? graphs.map((graph) => graph.name) : [];
 
   return (
     <aside className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -66,6 +72,41 @@ export default function Sidebar({
             disabled={!flowOptions.length || flowsLoading}
           >
             {flowOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="divider"></div>
+
+        <div className="section">
+          <button
+            className="new-chat-btn fetch-flows-btn"
+            onClick={onFetchGraphs}
+            disabled={graphsLoading}
+          >
+            {graphsLoading ? (
+              "⏳ Loading..."
+            ) : (
+              <>
+                <img src={flowPng} alt="Get Graphs" />
+                <span>Get Graphs</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        <div className="section">
+          <label>Select Graph:</label>
+          <select
+            value={graphName}
+            onChange={(e) => setGraphName(e.target.value)}
+            className="flow-select"
+            disabled={!graphOptions.length || graphsLoading}
+          >
+            {graphOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import ChatArea from './components/ChatArea';
 import InputArea from './components/InputArea';
 import Dialog from './components/Dialog';
-import { sendMessage, endChat, getFlows } from './services/api';
+import { sendMessage, endChat, getFlows, getGraphs } from './services/api';
 import './App.css';
 
 function App() {
@@ -14,6 +14,10 @@ function App() {
   const [flowName, setFlowName] = useState("");
   const [flowsLoading, setFlowsLoading] = useState(false);
   const [flowsError, setFlowsError] = useState("");
+  const [graphs, setGraphs] = useState([]);
+  const [graphName, setGraphName] = useState("");
+  const [graphsLoading, setGraphsLoading] = useState(false);
+  const [graphsError, setGraphsError] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth > 768 : true
   );
@@ -58,6 +62,29 @@ function App() {
     }
   };
 
+  const handleFetchGraphs = async () => {
+    setGraphsLoading(true);
+    setGraphsError("");
+    try {
+      const fetchedGraphs = await getGraphs();
+      setGraphs(fetchedGraphs || []);
+      if (fetchedGraphs?.length) {
+        setGraphName((current) =>
+          current && fetchedGraphs.some((graph) => graph.name === current)
+            ? current
+            : fetchedGraphs[0].name
+        );
+      } else {
+        setGraphName("");
+      }
+    } catch (error) {
+      console.error("Error fetching graphs:", error);
+      setGraphsError(error?.message || "Unable to fetch graphs");
+    } finally {
+      setGraphsLoading(false);
+    }
+  };
+
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
 
@@ -80,7 +107,7 @@ function App() {
     setBusy(true);
 
     try {
-      const response = await sendMessage(text, flowName, sessionId);
+      const response = await sendMessage(text, flowName, sessionId, graphName);
 
       // Update session ID if changed
       if (response.sessionId) {
@@ -132,6 +159,11 @@ function App() {
         flowsLoading={flowsLoading}
         flowName={flowName}
         setFlowName={setFlowName}
+        graphs={graphs}
+        onFetchGraphs={handleFetchGraphs}
+        graphsLoading={graphsLoading}
+        graphName={graphName}
+        setGraphName={setGraphName}
         isOpen={isSidebarOpen}
         onSetBaseUrl={() => {
           const stored = localStorage.getItem("picochat_base_url")?.trim() || "";
@@ -172,6 +204,13 @@ function App() {
         title="Flow fetch failed"
         message={flowsError}
         onClose={() => setFlowsError("")}
+      />
+
+      <Dialog
+        open={Boolean(graphsError)}
+        title="Graph fetch failed"
+        message={graphsError}
+        onClose={() => setGraphsError("")}
       />
 
       <Dialog
